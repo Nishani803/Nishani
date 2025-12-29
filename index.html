@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nishani - Custom Islamic Bookmarks</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --primary-gold: #D4AF37;
+            --bg-cream: #FAFAF0;
+            --text-dark: #333333;
+            --text-teal: #4A6C6F; 
+            --card-white: #FFFFFF;
+            --input-bg: #F8F8F4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-teal);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--bg-cream);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(74, 108, 111, 0.1);
+        }
+
+        .brand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            padding-bottom: 5px;
+            position: relative;
+        }
+
+        .brand-logo-urdu {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 2.5rem; 
+            color: var(--text-teal);
+            line-height: 1;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .brand-logo-english {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-gold);
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            margin-top: 8px; 
+            text-transform: uppercase;
+            font-weight: 600;
+            transform: translateX(30px);
+            z-index: 1;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover, nav a.active-tab { 
+            color: var(--text-teal);
+            border-color: var(--text-teal);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-teal);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px; right: -8px;
+            background: var(--primary-gold);
+            color: var(--bg-cream);
+            font-size: 0.7rem;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold;
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 1rem; padding: 1rem; }
+            nav ul { gap: 1rem; font-size: 0.8rem; flex-wrap: wrap; justify-content: center; }
+            .brand-logo-english { transform: translateX(10px); font-size: 0.9rem; }
+            .hero-tabs { flex-direction: column; align-items: center; width: 100%; }
+            .hero-tab-btn { width: 100%; }
+            .design-lab, .vm-grid { grid-template-columns: 1fr !important; }
+            .bundles-grid, .product-grid { grid-template-columns: 1fr !important; }
+            .intro-text-box { padding: 1rem; margin-top: 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero-urdu-subtitle { font-size: 1.2rem; }
+        }
+
+        /* --- PAGE WRAPPERS --- */
+        .page-content { display: none; padding-bottom: 4rem; animation: fadeIn 0.5s ease; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HERO --- */
+        .hero {
+            background: linear-gradient(rgba(250, 250, 240, 0.85), rgba(250, 250, 240, 0.85)), url('hero-bg.JPEG');
+            background-size: cover;
+            background-position: center;
+            padding: 4rem 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(74, 108, 111, 0.1);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-text-box {
+            max-width: 850px;
+            margin: 0 auto 2rem;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 4px double var(--primary-gold);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-teal);
+            line-height: 1.2;
+        }
+
+        .hero-urdu-subtitle {
+            display: block;
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1.5rem;
+            margin-top: 15px;
+            color: var(--text-teal);
+            font-weight: normal;
+        }
+
+        .hero-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-tab-btn {
+            background: white;
+            border: 1px solid var(--text-teal);
+            padding: 12px 25px;
+            min-width: 150px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-teal);
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.9rem;
+        }
+        .hero-tab-btn:hover { background: var(--text-teal); color: white; transform: translateY(-3px); }
+
+        /* --- FEATURED SAMPLES --- */
+        .featured-section { padding: 3rem 20px; max-width: 1200px; margin: 0 auto; }
+        .sample-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 2rem; }
+        
+        .sample-img-card {
+            width: 300px; height: 350px;
+            border-radius: 12px; overflow: hidden;
+            border: 1px solid var(--text-teal);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            position: relative; cursor: pointer;
+            background: #e0e0e0; 
+        }
+        .sample-img-card img { 
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; 
+            display: block;
+        }
+        .sample-img-card:hover img { transform: scale(1.05); }
+
+        /* --- CONTACT SECTION --- */
+        .contact-section { background: var(--input-bg); padding: 4rem 20px; border-top: 1px solid rgba(74, 108, 111, 0.1); }
+        .contact-form-box {
+            max-width: 600px; margin: 0 auto;
+            background: white; padding: 2rem; border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--text-teal);
+        }
+
+        /* --- SOCIAL & ABOUT --- */
+        .intro-paragraph-container { max-width: 800px; margin: 0 auto 3rem; text-align: center; color: #555; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-style: italic; line-height: 1.8; }
+        .vision-mission-section { background: var(--card-white); padding: 4rem 20px; text-align: center; border-top: 1px solid rgba(74, 108, 111, 0.1); }
+        .vm-grid { max-width: 900px; margin: 2rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .vm-card h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-teal); font-family: 'Playfair Display', serif; }
+        .vm-card p { line-height: 1.6; color: #555; font-size: 1.1rem; font-style: italic; }
+        .social-bar { margin-top: 3rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;}
+        .social-link { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-teal); font-size: 1.2rem; padding: 10px 20px; border: 1px solid rgba(74, 108, 111, 0.2); border-radius: 8px; transition: all 0.3s; }
+        .social-link:hover { background: var(--text-teal); color: white; }
+
+        /* --- COMMON STYLES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-title { text-align: center; margin: 3rem 0 1rem; font-size: 2.5rem; color: var(--text-teal); }
+        .btn { padding: 12px 35px; background: var(--text-teal); color: var(--bg-cream); border: none; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; cursor: pointer; transition: 0.3s; border-radius: 4px; }
+        .btn:hover { background: #375255; }
+        .btn:disabled { background: #ccc; cursor: not-allowed; opacity: 0.7; }
+
+        .form-control { width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid #ccc; border-radius: 6px; margin-bottom: 1rem; font-family: 'Lato', sans-serif;}
+        
+        /* Bundles Grid */
+        .bundles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        
+        /* FLEXBOX PRODUCT GRID */
+        .product-grid { 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; 
+            gap: 2rem;
+        }
+        
+        .bundle-card { 
+            background: var(--card-white); 
+            border: 1px solid rgba(74, 108, 111, 0.2); 
+            border-radius: 12px; 
+            padding: 0; 
+            text-align: center; 
+            position: relative; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); 
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .bundle-card:hover { transform: translateY(-5px); }
+        
+        /* BUNDLE IMAGE STYLE */
+        .bundle-card img {
+            width: 100%; 
+            height: 250px; 
+            object-fit: cover; 
+            background-color: #e0e0e0;
+        }
+
+        .bundle-img-placeholder {
+            width: 100%; height: 250px; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #888; font-weight: bold; font-size: 1.2rem;
+        }
+        .bundle-content { padding: 1.5rem; display: flex; flex-direction: column; height: 100%; }
+        .badge { position: absolute; top: 10px; right: 10px; background: var(--primary-gold); color: white; padding: 5px 12px; font-size: 0.8rem; font-weight: bold; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .bundle-title { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-teal); min-height: 3rem; display: flex; align-items: center; justify-content: center; }
+        .bundle-details { list-style: none; text-align: left; margin: 1rem 0; font-size: 0.95rem; color: #555; }
+        .bundle-details li { margin-bottom: 8px; padding-left: 1.2rem; position: relative; }
+        .bundle-details li::before { content: '•'; color: var(--primary-gold); position: absolute; left: 0; font-weight: bold; }
+        .bundle-price { font-size: 1.4rem; color: var(--text-teal); font-weight: bold; margin-top: auto; padding-top: 1rem; border-top: 1px dashed #ddd; }
+        .old-price { text-decoration: line-through; opacity: 0.6; font-size: 0.9rem; margin-right: 8px; color: #888; }
+        
+        /* Product Card Styles */
+        .product-card { 
+            background: var(--card-white); 
+            border: 1px solid rgba(74, 108, 111, 0.2); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            text-align: center; 
+            position: relative; 
+            display: none; 
+            width: 300px; 
+            height: 420px; 
+            flex-direction: column;
+        }
+        .product-card.visible { display: flex; animation: fadeIn 0.5s; }
+
+        .product-card img { width: 100%; height: 280px; object-fit: cover; background: #eee; }
+        .p-info { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+
+        /* Gallery Expand Arrow */
+        .gallery-expand-container { text-align: center; margin-top: 2rem; width: 100%; }
+        .expand-arrow { 
+            font-size: 2rem; color: var(--text-teal); cursor: pointer; 
+            border: 2px solid var(--text-teal); border-radius: 50%; width: 50px; height: 50px; 
+            display: inline-flex; align-items: center; justify-content: center; transition: 0.3s;
+            animation: bounce 2s infinite;
+        }
+        .expand-arrow:hover { background: var(--text-teal); color: white; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
+
+        /* --- MODALS --- */
+        .bundle-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2500; justify-content: center; align-items: center; }
+        .bundle-modal-content { background: white; padding: 2rem; border-radius: 12px; width: 95%; max-width: 500px; max-height: 90vh; overflow-y: auto; text-align: left; position: relative; border-top: 5px solid var(--text-teal); }
+        .close-modal-btn { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; cursor: pointer; color: #666; }
+        
+        /* Addon Options */
+        .addon-option { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
+        .addon-option:hover { background: #f9f9f9; border-color: var(--text-teal); }
+        .addon-option input[type="checkbox"] { transform: scale(1.2); accent-color: var(--text-teal); }
+
+        /* --- CHECKOUT & CART --- */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: var(--card-white); border-left: 1px solid var(--text-teal); z-index: 1000; transition: right 0.3s; padding: 2rem; display: flex; flex-direction: column; }
+        .cart-sidebar.active { right: 0; }
+        .checkout-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .checkout-content { background: var(--card-white); padding: 2rem; border-radius: 12px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+
+        /* --- LIGHTBOX (TOP IMAGE / BOTTOM TEXT) --- */
+        .lightbox-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
+        
+        .lightbox-content { 
+            background: white; padding: 20px; border-radius: 8px; 
+            max-width: 600px; width: 100%; 
+            display: flex; flex-direction: column; 
+            gap: 15px; position: relative; align-items: center; 
+        }
+        
+        .lightbox-img-container { 
+            width: 100%; height: 400px;
+            position: relative; display: flex; align-items: center; justify-content: center; 
+            background: #f8f8f8; border-radius: 4px; overflow: hidden; 
+        }
+        .lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        
+        .lightbox-details { 
+            width: 100%; text-align: center;
+            display: flex; flex-direction: column; justify-content: center; 
+        }
+        
+        .close-lightbox { position: absolute; top: -40px; right: 0; font-size: 2rem; cursor: pointer; color: white; }
+        .lb-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 2rem; cursor: pointer; background: rgba(0,0,0,0.5); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; user-select: none; transition: 0.3s; z-index: 10; }
+        .lb-arrow:hover { background: rgba(212, 175, 55, 0.8); }
+        .lb-prev { left: 10px; }
+        .lb-next { right: 10px; }
+
+        /* --- DESIGN LAB (ROTATED TEXT FIX & IMAGE FILL) --- */
+        .design-lab-header-box { text-align: center; margin-bottom: 3rem; padding: 2rem; background: var(--bg-cream); border: 3px double var(--primary-gold); border-radius: 12px; }
+        .design-lab { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; background: var(--card-white); padding: 3rem; border-radius: 12px; border: 1px solid rgba(74, 108, 111, 0.3); }
+        .preview-area { background: var(--bg-cream); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 450px; border: 2px dashed rgba(74, 108, 111, 0.2); }
+        .bookmark-preview { width: 120px; height: 350px; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); border: 1px solid rgba(74, 108, 111, 0.3); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; padding: 10px; }
+        .tassel-visual { position: absolute; top: -50px; left: 50%; transform: translateX(-50%); width: 2px; height: 50px; background: #D4AF37; z-index: 5; }
+        .tassel-visual::after { content: ''; position: absolute; top: 40px; left: -5px; width: 12px; height: 30px; background: #D4AF37; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        
+        .preview-text-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 300px;
+            transform: translate(-50%, -50%) rotate(-90deg); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px; 
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .preview-text { 
+            font-size: 1.5rem; 
+            word-break: break-all;
+            white-space: nowrap; 
+            text-align: center;
+            display: block; 
+        }
+
+        .uploaded-image-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: fill; 
+            z-index: 4; 
+            display: none;
+        }
+        
+        /* Font Classes */
+        .font-nastaliq { font-family: 'Noto Nastaliq Urdu', serif; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-dancing { font-family: 'Dancing Script', cursive; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-greatvibes { font-family: 'Great Vibes', cursive; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        .font-amiri { font-family: 'Amiri', serif; }
+
+        /* Border Classes */
+        .border-minimal { border: 2px solid var(--text-teal); }
+        .border-vintage { border: 4px double var(--text-teal); border-radius: 4px; }
+        .border-geometric { border: 2px solid var(--text-teal); outline: 2px dashed var(--text-teal); outline-offset: -8px; }
+        .border-floral { border: 2px solid var(--text-teal); border-radius: 15px; outline: 1px dotted var(--primary-gold); outline-offset: -6px; }
+        .border-modern { border-left: 5px solid var(--text-teal); border-right: 5px solid var(--text-teal); border-top: 0; border-bottom: 0; }
+
+        .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .color-dot.selected { border: 2px solid #333; transform: scale(1.1); }
+        .color-dot.bundle-selected { border: 2px solid #333; transform: scale(1.1); }
+
+        footer { background: var(--text-teal); padding: 2rem 0; text-align: center; color: var(--bg-cream); margin-top: auto; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="brand-container" onclick="showPage('home')">
+            <span class="brand-logo-urdu">نشانی</span>
+            <span class="brand-logo-english">NISHANI</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('home')" id="nav-home" class="active-tab">Home</a></li>
+                <li><a href="#" onclick="showPage('bundles')" id="nav-bundles">Bundles</a></li>
+                <li><a href="#" onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
+                <li><a href="#" onclick="showPage('design-lab')" id="nav-design-lab">Design Lab</a></li>
+                <li><a href="#" onclick="showPage('about')" id="nav-about">About Us</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </header>
+
+    <div id="page-home" class="page-content active">
+        <section class="hero">
+            <div class="intro-text-box">
+                <h1>Where memories become keepsakes
+                    <span class="hero-urdu-subtitle">کسی کی غیر موجودگی میں موجودگی کا احساس</span>
+                </h1>
+            </div>
+            
+            <div class="hero-tabs">
+                <a href="#" onclick="showPage('bundles')" class="hero-tab-btn">
+                    <i class="fas fa-gift"></i> View Bundles
+                </a>
+                <a href="#" onclick="showPage('gallery')" class="hero-tab-btn">
+                    <i class="fas fa-images"></i> Gallery
+                </a>
+                <a href="#" onclick="showPage('design-lab')" class="hero-tab-btn">
+                    <i class="fas fa-pencil-alt"></i> Design Lab
+                </a>
+            </div>
+        </section>
+
+        <section class="featured-section">
+            <h2 class="section-title">A Glimpse of Elegance</h2>
+            <div class="sample-grid">
+                <div class="sample-img-card" onclick="openLightbox(0, 'featured')">
+                    <img src="featured-1.JPEG" alt="Featured 1" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#666;\'>Image 1 Not Found</div>'">
+                </div>
+                <div class="sample-img-card" onclick="openLightbox(1, 'featured')">
+                    <img src="featured-2.JPEG" alt="Featured 2" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#666;\'>Image 2 Not Found</div>'">
+                </div>
+                <div class="sample-img-card" onclick="openLightbox(2, 'featured')">
+                    <img src="featured-3.JPEG" alt="Featured 3" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#666;\'>Image 3 Not Found</div>'">
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <h2 class="section-title">Have a Query?</h2>
+            <div class="contact-form-box">
+                <form id="contactForm" onsubmit="handleContact(event)">
+                    <input type="hidden" name="access_key" value="30329ddb-c315-43b7-b53d-f8fb7399ee7b">
+                    <input type="text" name="name" placeholder="Your Name" class="form-control" required>
+                    <input type="email" name="email" placeholder="Your Email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
+                    <textarea name="message" rows="4" placeholder="How can we help you?" class="form-control" required></textarea>
+                    <button type="submit" class="btn" style="width:100%;">Send Query</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <div id="page-bundles" class="page-content">
+        <div class="container" style="padding-top: 2rem;">
+            <h2 class="section-title">Curated Gift Bundles</h2>
+            <p style="text-align:center; margin-bottom:3rem; color:#666;">Choose a ready-made set or build your own.</p>
+            
+            <div class="bundles-grid">
+                <div class="bundle-card">
+                    <img src="bundle-ramadan.JPEG" alt="Ramadan Bundle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="bundle-img-placeholder" style="display:none">Ramadan Bundle Image</div>
+                    <span class="badge" style="background:var(--text-teal);">Starter Gift</span>
+                    <div class="bundle-content">
+                        <h3 class="bundle-title">RAMADAN BLESSINGS BUNDLE</h3>
+                        <ul class="bundle-details">
+                            <li>3 Custom Acrylic Bookmarks</li>
+                            <li>Choice of tassels</li>
+                            <li>Optional Islamic names</li>
+                        </ul>
+                        <div class="bundle-price">
+                            <span class="old-price">PKR 2,100</span> PKR 1,950
+                        </div>
+                        <br>
+                        <button class="btn" onclick="openStandardBundle('Ramadan Blessings Bundle', 1950, ['3 Custom Acrylic Bookmarks', 'Choice of Tassels', 'Optional Islamic Names'])">View & Buy</button>
+                    </div>
+                </div>
+                <div class="bundle-card">
+                    <img src="bundle-eid.JPEG" alt="Eid Bundle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="bundle-img-placeholder" style="display:none">Eid Bundle Image</div>
+                    <span class="badge">Save 200</span>
+                    <div class="bundle-content">
+                        <h3 class="bundle-title">EID CELEBRATION SET</h3>
+                        <ul class="bundle-details">
+                            <li>4 Custom Bookmarks</li>
+                            <li>Mixed tassels (Pearl + Silk)</li>
+                            <li>Gift-style packaging</li>
+                        </ul>
+                        <div class="bundle-price">
+                            <span class="old-price">PKR 2,800</span> PKR 2,600
+                        </div>
+                        <br>
+                        <button class="btn" onclick="openStandardBundle('Eid Celebration Set', 2600, ['4 Custom Bookmarks', 'Mixed Tassels', 'Gift-style Packaging'])">View & Buy</button>
+                    </div>
+                </div>
+                <div class="bundle-card">
+                    <img src="bundle-wedding.JPEG" alt="Wedding Bundle" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="bundle-img-placeholder" style="display:none">Wedding Bundle Image</div>
+                    <span class="badge" style="background:#800020;">Luxury Wedding</span>
+                    <div class="bundle-content">
+                        <h3 class="bundle-title">NIKAH / SHAADI FAVOR SET</h3>
+                        <ul class="bundle-details">
+                            <li>5 Custom Acrylic Bookmarks</li>
+                            <li>"Bismillah" or Name options</li>
+                            <li>Matching gold-toned tassels</li>
+                        </ul>
+                        <div class="bundle-price">PKR 3,300</div>
+                        <br>
+                        <button class="btn" onclick="openStandardBundle('Nikah Favor Set', 3300, ['5 Custom Bookmarks', 'Name Options', 'Gold Tassels'])">View & Buy</button>
+                    </div>
+                </div>
+                
+                <div class="bundle-card" style="border: 2px dashed var(--text-teal); background: #fdfdfd;">
+                    <div class="bundle-img-placeholder" style="background:#4A6C6F; color:white;"><i class="fas fa-magic" style="font-size:3rem;"></i></div>
+                    <div class="bundle-content">
+                        <h3 class="bundle-title">BUILD / CUSTOMIZE YOUR BUNDLE</h3>
+                        <p style="color:#666; font-size:0.9rem; margin-bottom:1rem;">Add engravings, gift boxes, and premium upgrades here.</p>
+                        <ul class="bundle-details">
+                            <li>Select Add-ons</li>
+                            <li>View specific costs</li>
+                            <li>Build your perfect gift</li>
+                        </ul>
+                        <div class="bundle-price" style="border:none; padding-top:0;">Variable Price</div>
+                        <br>
+                        <button class="btn" onclick="openBundleConfig('Custom Bundle Configuration', 0)">Customize Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="standardBundleModal" class="bundle-modal" onclick="handleLightboxClick(event)">
+        <div class="bundle-modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal-btn" onclick="closeStandardModal()">&times;</span>
+            <h3 id="stdTitle" style="color:var(--text-teal); margin-bottom:1rem;">Bundle Title</h3>
+            <p style="margin-bottom:1rem; font-weight:bold;">Includes:</p>
+            <ul id="stdList" style="margin-bottom:1.5rem; padding-left:1.5rem; color:#555;"></ul>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #eee; padding-top:1rem;">
+                <span id="stdPrice" style="font-size:1.5rem; font-weight:bold; color:var(--text-teal);">PKR 0</span>
+                <button class="btn" onclick="addStandardToCart()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bundleConfigModal" class="bundle-modal" onclick="handleLightboxClick(event)">
+        <div class="bundle-modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal-btn" onclick="closeBundleConfig()">&times;</span>
+            <h3 id="bcmTitle" style="margin-bottom: 0.5rem; color: var(--text-teal);">Customize Your Bundle</h3>
+            <p style="margin-bottom: 1.5rem; color: #666; font-size:0.9rem;">Select add-ons to calculate your custom price.</p>
+            <div id="bcmAddons">
+                <label class="addon-option">
+                    <span><i class="fas fa-pen-fancy" style="color:var(--text-teal); margin-right:8px;"></i> Name Engraving</span>
+                    <div><span style="font-size:0.9rem; color:#888; margin-right:5px;">+ PKR 200</span><input type="checkbox" onchange="toggleAddonInput('engravingInputArea', this); updateBundleConfigTotal()" data-price="200" data-name="Engraving"></div>
+                </label>
+                <div id="engravingInputArea" style="display:none; margin-bottom:15px; padding-left:10px; border-left:2px solid var(--text-teal);">
+                    <input type="text" id="bundleEngravingText" class="form-control" placeholder="Type text here..." style="margin-bottom:10px;">
+                    <select id="bundleFontStyle" class="form-control" style="margin-bottom:0;">
+                        <option value="font-nastaliq">Urdu Nastaliq</option>
+                        <option value="font-playfair">Playfair</option>
+                        <option value="font-dancing">Dancing Script</option>
+                        <option value="font-cinzel">Cinzel</option>
+                        <option value="font-greatvibes">Great Vibes</option>
+                        <option value="font-montserrat">Montserrat</option>
+                        <option value="font-amiri">Amiri</option>
+                    </select>
+                </div>
+                <label class="addon-option">
+                    <span><i class="fas fa-gem" style="color:var(--text-teal); margin-right:8px;"></i> Custom Tassel</span>
+                    <div><span style="font-size:0.9rem; color:#888; margin-right:5px;">+ PKR 300</span><input type="checkbox" onchange="toggleAddonInput('tasselInputArea', this); updateBundleConfigTotal()" data-price="300" data-name="Custom Tassel"></div>
+                </label>
+                <div id="tasselInputArea" style="display:none; margin-bottom:15px; padding-left:10px; border-left:2px solid var(--text-teal);">
+                    <p style="font-size:0.9rem; color:#555; margin-bottom:5px;">Select Tassel Color:</p>
+                    <div style="display:flex; gap:10px; flex-wrap: wrap;">
+                        <div style="background:#D4AF37;" onclick="selectBundleTassel(this, 'Gold')" class="color-dot bundle-selected"></div>
+                        <div style="background:#003366;" onclick="selectBundleTassel(this, 'Royal Blue')" class="color-dot"></div>
+                        <div style="background:#800020;" onclick="selectBundleTassel(this, 'Burgundy')" class="color-dot"></div>
+                        <div style="background:#50C878;" onclick="selectBundleTassel(this, 'Emerald')" class="color-dot"></div>
+                        <div style="background:#708090;" onclick="selectBundleTassel(this, 'Slate')" class="color-dot"></div>
+                        <div style="background:#000000;" onclick="selectBundleTassel(this, 'Black')" class="color-dot"></div>
+                    </div>
+                    <input type="hidden" id="bundleTasselChoice" value="Gold">
+                </div>
+                <label class="addon-option">
+                    <span><i class="fas fa-box-open" style="color:var(--text-teal); margin-right:8px;"></i> Luxury Gift Box</span>
+                    <div><span style="font-size:0.9rem; color:#888; margin-right:5px;">+ PKR 500</span><input type="checkbox" onchange="updateBundleConfigTotal()" data-price="500" data-name="Gift Box"></div>
+                </label>
+                <label class="addon-option">
+                    <span><i class="fas fa-shipping-fast" style="color:var(--text-teal); margin-right:8px;"></i> Express Customization</span>
+                    <div><span style="font-size:0.9rem; color:#888; margin-right:5px;">+ PKR 300</span><input type="checkbox" onchange="updateBundleConfigTotal()" data-price="300" data-name="Express"></div>
+                </label>
+            </div>
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold;">Add-on Total:</span>
+                <span id="bcmTotal" style="font-size: 1.5rem; font-weight: bold; color: var(--text-teal);">PKR 0</span>
+            </div>
+            <button id="bundleAddCartBtn" class="btn" style="width: 100%; margin-top: 1rem;" onclick="addConfiguredBundleToCart()" disabled>Add Options to Cart</button>
+        </div>
+    </div>
+
+    <div id="page-gallery" class="page-content">
+        <div class="container" style="padding-top: 2rem;">
+            <h2 class="section-title">Pre-Made Collection</h2>
+            <p style="text-align:center; margin-bottom:3rem; color:#666;">Browse our gallery of past creations.</p>
+            <div class="product-grid" id="galleryGrid"></div>
+            <div class="gallery-expand-container">
+                <div class="expand-arrow" id="galleryToggleBtn" onclick="toggleGalleryExpand()"><i class="fas fa-chevron-down"></i></div>
+                <p id="galleryToggleText" style="margin-top:10px; color:var(--text-teal);">Show More</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-design-lab" class="page-content">
+        <div class="container" style="padding-top: 2rem;">
+            <div class="design-lab-header-box">
+                <h2 class="section-title" style="margin-top: 0;">Nishani Design Lab</h2>
+                <p>Craft a bookmark that speaks to your heart.</p>
+            </div>
+            <div class="design-lab">
+                <div class="controls-area">
+                    <label style="font-weight:bold; display:block; margin-bottom:5px;">1. Border Style</label>
+                    <select id="borderStyle" class="form-control" onchange="updatePreview()">
+                        <option value="none">No Border</option>
+                        <option value="border-minimal">Minimal Gold</option>
+                        <option value="border-vintage">Vintage Double</option>
+                        <option value="border-geometric">Geometric</option>
+                        <option value="border-floral">Floral Dot</option>
+                        <option value="border-modern">Modern Vertical</option>
+                    </select>
+
+                    <hr style="border:0; border-top:1px dashed #ccc; margin: 1.5rem 0;">
+
+                    <label style="font-weight:bold; color:var(--text-teal);">Line 1 (Left/Top)</label>
+                    <input type="text" id="customText" class="form-control" placeholder="Text Line 1" maxlength="15" oninput="updatePreview()" style="margin-bottom:5px;">
+                    <div style="display:flex; gap:5px; margin-bottom:1rem;">
+                        <select id="fontStyle1" class="form-control" onchange="updatePreview()" style="margin-bottom:0; flex:2;">
+                            <option value="font-nastaliq">Urdu Nastaliq</option>
+                            <option value="font-playfair">Playfair</option>
+                            <option value="font-dancing">Dancing Script</option>
+                            <option value="font-cinzel">Cinzel</option>
+                            <option value="font-greatvibes">Great Vibes</option>
+                            <option value="font-montserrat">Montserrat</option>
+                            <option value="font-amiri">Amiri</option>
+                        </select>
+                        <input type="color" id="textColor1" value="#4A6C6F" onchange="updatePreview()" style="height:45px; flex:1; cursor:pointer;">
+                    </div>
+
+                    <label style="font-weight:bold; color:var(--text-teal);">Line 2 (Right/Bottom)</label>
+                    <input type="text" id="customText2" class="form-control" placeholder="Text Line 2" maxlength="15" oninput="updatePreview()" style="margin-bottom:5px;">
+                    <div style="display:flex; gap:5px; margin-bottom:1rem;">
+                        <select id="fontStyle2" class="form-control" onchange="updatePreview()" style="margin-bottom:0; flex:2;">
+                            <option value="font-nastaliq">Urdu Nastaliq</option>
+                            <option value="font-playfair">Playfair</option>
+                            <option value="font-dancing">Dancing Script</option>
+                            <option value="font-cinzel">Cinzel</option>
+                            <option value="font-greatvibes">Great Vibes</option>
+                            <option value="font-montserrat">Montserrat</option>
+                            <option value="font-amiri">Amiri</option>
+                        </select>
+                        <input type="color" id="textColor2" value="#4A6C6F" onchange="updatePreview()" style="height:45px; flex:1; cursor:pointer;">
+                    </div>
+
+                    <hr style="border:0; border-top:1px dashed #ccc; margin: 1.5rem 0;">
+
+                    <label style="font-weight:bold; display:block; margin-bottom:5px;">Tassel Color</label>
+                    <div style="display:flex; gap:10px; margin-bottom:1rem; flex-wrap: wrap;">
+                        <div style="background:#D4AF37;" onclick="selectColor(this, 'Gold', '#D4AF37')" class="color-dot selected"></div>
+                        <div style="background:#003366;" onclick="selectColor(this, 'Royal Blue', '#003366')" class="color-dot"></div>
+                        <div style="background:#800020;" onclick="selectColor(this, 'Burgundy', '#800020')" class="color-dot"></div>
+                        <div style="background:#50C878;" onclick="selectColor(this, 'Emerald', '#50C878')" class="color-dot"></div>
+                        <div style="background:#708090;" onclick="selectColor(this, 'Slate', '#708090')" class="color-dot"></div>
+                        <div style="background:#000000;" onclick="selectColor(this, 'Black', '#000000')" class="color-dot"></div>
+                    </div>
+                    <input type="hidden" id="selectedColor" value="Gold">
+
+                    <div style="background: rgba(74, 108, 111, 0.05); padding: 15px; border-radius: 6px; border: 1px dashed var(--text-teal); margin-bottom:1rem;">
+                        <label style="color: var(--text-teal); font-weight:bold;">Upload Image (Front View/Template)</label>
+                        <input type="file" id="customFile" class="form-control" accept="image/*" onchange="handleImageUpload(this)">
+                        <button id="removeImageBtn" class="btn" style="background:#d9534f; width:100%; display:none; padding:8px; font-size:0.8rem;" onclick="removeUploadedImage()">Remove Image</button>
+                    </div>
+
+                    <div style="display:flex; gap:10px; align-items:center; background:var(--input-bg); padding:10px; border-radius:6px;">
+                        <input type="checkbox" id="giftBox" onchange="updateTotal()">
+                        <label for="giftBox" style="margin:0;">Add Gift Box (+PKR 250)</label>
+                    </div>
+
+                    <div style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+                            <span style="font-weight: bold;">Total Price:</span>
+                            <span id="customPrice" style="font-size: 1.5rem; color: var(--text-teal); font-weight: bold;">PKR 999</span>
+                        </div>
+                        <button class="btn" style="width: 100%;" onclick="addLabItemToCart()">Add Custom Design</button>
+                    </div>
+                </div>
+
+                <div class="preview-area">
+                    <div id="visualPreview" class="bookmark-preview">
+                        <div id="tasselVisual" class="tassel-visual"></div>
+                        <img id="uploadedImageLayer" class="uploaded-image-layer" src="" alt="Custom Design">
+                        <div id="previewTextContainer" class="preview-text-container">
+                            <span id="previewTextDisplay" class="preview-text font-nastaliq">Text 1</span>
+                            <span id="previewTextDisplay2" class="preview-text font-nastaliq" style="display:none;">Text 2</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem; color: #888; font-size: 0.8rem;">*Digital preview only.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-about" class="page-content">
+        <div class="container" style="padding-top: 4rem;">
+            <h2 class="section-title">Our Story</h2>
+            <div class="intro-paragraph-container">
+                <p>At Nishani, we create personalized bookmarks that hold meaning...</p>
+            </div>
+            <div class="vision-mission-section" style="border:none;">
+                <h2 class="section-title" style="margin-top:0;">Our Essence</h2>
+                <div class="vm-grid">
+                    <div class="vm-card"><h3>Vision</h3><p>“To create a world where every gift tells a story.”</p></div>
+                    <div class="vm-card"><h3>Mission</h3><p>“Turning thoughts into keepsakes that last a lifetime.”</p></div>
+                </div>
+                <div class="social-bar" style="margin-top: 4rem; border-top: 1px solid rgba(74, 108, 111, 0.1); padding-top: 2rem;">
+                    <a href="https://instagram.com/nishani.pk" target="_blank" class="social-link"><i class="fab fa-instagram"></i> @nishani.pk</a>
+                    <a href="https://wa.me/923001234567" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i> +92 300 1234567</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div style="display:flex; justify-content:space-between; align-items: center; margin-bottom:2rem;">
+            <h3 style="color: var(--text-teal); margin:0;">Your Cart</h3>
+            <span style="cursor:pointer; font-size:1.5rem; color: var(--text-teal);" onclick="toggleCart()">&times;</span>
+        </div>
+        <div id="cartItemsContainer" style="flex:1; overflow-y:auto;"></div>
+        <div style="margin-top:auto; padding-top:1rem; border-top:1px solid #eee;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:bold; color:var(--text-teal);">
+                <span>Total</span>
+                <span id="cartTotal">PKR 0</span>
+            </div>
+            <button class="btn" style="width:100%;" onclick="openCheckout()">Checkout</button>
+        </div>
+    </div>
+
+    <div class="lightbox-modal" id="imageModal" onclick="handleLightboxClick(event)">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <div class="lightbox-img-container">
+                <div class="lb-arrow lb-prev" onclick="changeImage(-1)"><i class="fas fa-chevron-left"></i></div>
+                <img id="lbImage" class="lightbox-img" src="" alt="Detail View">
+                <div class="lb-arrow lb-next" onclick="changeImage(1)"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="lightbox-details">
+                <h3 id="lbTitle" style="color: var(--text-teal); margin-bottom: 0.5rem;">Product Title</h3>
+                <p id="lbPrice" style="font-size: 1.5rem; color: var(--primary-gold); font-weight: bold; margin-bottom: 1rem;">PKR 0</p>
+                <p id="lbDesc" style="color:#666; margin-bottom:1rem;">Elegant custom acrylic bookmark.</p>
+                <button class="btn" onclick="addLightboxItem()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-content">
+            <h2 style="text-align:center; margin-bottom:1.5rem; color:var(--text-teal);">Checkout</h2>
+            <form id="checkoutForm" onsubmit="handlePayment(event)">
+                <input type="hidden" name="access_key" value="30329ddb-c315-43b7-b53d-f8fb7399ee7b">
+                <input type="text" name="name" placeholder="Full Name" required class="form-control">
+                <input type="email" name="email" placeholder="Your Email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
+                <input type="text" name="address" placeholder="Shipping Address" required class="form-control">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <input type="text" name="city" placeholder="City" required class="form-control">
+                    <input type="tel" name="phone" id="phoneInput" placeholder="Phone (Numbers only)" required class="form-control" pattern="[0-9]{10,15}" title="Please enter a valid phone number (digits only)">
+                </div>
+                <p style="font-weight:bold; margin-top:1rem;">Payment Method</p>
+                <div style="background:var(--input-bg); padding:10px; border-radius:6px; margin-bottom:5px;">
+                    <input type="radio" name="payment_method" value="COD" checked> Cash on Delivery
+                </div>
+                <div style="background:var(--input-bg); padding:10px; border-radius:6px; margin-bottom:1.5rem;">
+                    <input type="radio" name="payment_method" value="Bank Transfer"> Bank Transfer
+                </div>
+                <textarea name="message" id="orderMessage" style="display:none;"></textarea>
+                <div style="display:flex; gap:10px;">
+                    <button type="button" class="btn" style="background:#ccc; color:#333;" onclick="document.getElementById('checkoutModal').style.display='none'">Cancel</button>
+                    <button type="submit" class="btn" style="flex:1;">Confirm Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <span class="brand-logo-urdu" style="font-size:2rem; color:var(--primary-gold);">نشانی</span>
+        <p style="margin-top:1rem;">&copy; 2025 Nishani Bookmarks. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(link => link.classList.remove('active-tab'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            const activeLink = document.getElementById('nav-' + pageId);
+            if(activeLink) activeLink.classList.add('active-tab');
+            window.scrollTo(0,0);
+        }
+
+        const featuredItems = [
+            { img: 'featured-1.JPEG', title: 'Elegant Acrylic', price: 999 },
+            { img: 'featured-2.JPEG', title: 'Custom Engraved', price: 999 },
+            { img: 'featured-3.JPEG', title: 'Floral Border', price: 999 }
+        ];
+
+        // Gallery Items (Random Prices 250-700)
+        const galleryItems = [ ...featuredItems ]; 
+        for(let i=1; i<=15; i++) {
+            const randomPrice = Math.floor(Math.random() * (700 - 250 + 1)) + 250;
+            galleryItems.push({
+                img: `gallery-${i}.JPEG`,
+                title: `Gallery Design ${i}`,
+                price: randomPrice
+            });
+        }
+
+        let visibleGalleryCount = 6;
+        const galleryGrid = document.getElementById('galleryGrid');
+        const galleryToggleBtn = document.getElementById('galleryToggleBtn');
+        const galleryToggleText = document.getElementById('galleryToggleText');
+
+        function renderGallery() {
+            galleryGrid.innerHTML = '';
+            galleryItems.forEach((item, index) => {
+                const isVisible = index < visibleGalleryCount ? 'visible' : '';
+                galleryGrid.innerHTML += `
+                    <div class="product-card ${isVisible}" onclick="openLightbox(${index}, 'gallery')">
+                        <img src="${item.img}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/250x350?text=Design+${index+1}'">
+                        <div class="p-info">
+                            <h4>${item.title}</h4>
+                            <p style="color:var(--text-teal); font-weight:bold; margin:0.5rem 0;">PKR ${item.price}</p>
+                            <button class="btn" style="width:100%; font-size:0.8rem; padding:8px;">View</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            if(visibleGalleryCount >= galleryItems.length) {
+                galleryToggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                galleryToggleText.innerText = "Show Less";
+            } else {
+                galleryToggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+                galleryToggleText.innerText = "Show More";
+            }
+        }
+
+        function toggleGalleryExpand() {
+            if (visibleGalleryCount >= galleryItems.length) {
+                visibleGalleryCount = 6;
+            } else {
+                visibleGalleryCount += 6;
+            }
+            renderGallery();
+        }
+        renderGallery();
+
+        let currentImageIndex = 0;
+        let currentLightboxList = [];
+
+        function openLightbox(index, source) {
+            if (source === 'featured') { currentLightboxList = featuredItems; } 
+            else { currentLightboxList = galleryItems; }
+            currentImageIndex = index;
+            updateLightboxContent();
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function handleLightboxClick(event) {
+            if (event.target.id === 'imageModal' || event.target.id === 'standardBundleModal' || event.target.id === 'bundleConfigModal') {
+                event.target.style.display = 'none';
+            }
+        }
+
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = currentLightboxList.length - 1;
+            if (currentImageIndex >= currentLightboxList.length) currentImageIndex = 0;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            const item = currentLightboxList[currentImageIndex];
+            document.getElementById('lbImage').src = item.img;
+            document.getElementById('lbImage').onerror = function() { this.src = `https://via.placeholder.com/500x500?text=${item.title}`; };
+            document.getElementById('lbTitle').innerText = item.title;
+            document.getElementById('lbPrice').innerText = 'PKR ' + item.price;
+        }
+
+        function addLightboxItem() {
+            const item = currentLightboxList[currentImageIndex];
+            addToCart(item.title, item.price, 'Gallery Item');
+            closeLightbox();
+        }
+
+        let tempStandardBundle = {};
+        function openStandardBundle(title, price, items) {
+            tempStandardBundle = { title, price };
+            document.getElementById('stdTitle').innerText = title;
+            document.getElementById('stdPrice').innerText = 'PKR ' + price.toLocaleString();
+            const list = document.getElementById('stdList');
+            list.innerHTML = '';
+            items.forEach(item => { list.innerHTML += `<li>${item}</li>`; });
+            document.getElementById('standardBundleModal').style.display = 'flex';
+        }
+        function closeStandardModal() { document.getElementById('standardBundleModal').style.display = 'none'; }
+        function addStandardToCart() { addToCart(tempStandardBundle.title, tempStandardBundle.price, 'Standard Bundle'); closeStandardModal(); }
+
+        function openBundleConfig(name, basePrice) {
+            document.querySelectorAll('#bcmAddons input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.getElementById('bundleEngravingText').value = '';
+            document.getElementById('engravingInputArea').style.display = 'none';
+            document.getElementById('tasselInputArea').style.display = 'none';
+            updateBundleConfigTotal();
+            document.getElementById('bundleConfigModal').style.display = 'flex';
+        }
+        function closeBundleConfig() { document.getElementById('bundleConfigModal').style.display = 'none'; }
+        function toggleAddonInput(elementId, checkbox) {
+            const elem = document.getElementById(elementId);
+            if(checkbox.checked) { elem.style.display = 'block'; } else { elem.style.display = 'none'; }
+        }
+        function selectBundleTassel(element, colorName) {
+            document.querySelectorAll('.color-dot.bundle-selected').forEach(d => d.style.border = '2px solid transparent');
+            element.style.border = '2px solid #333';
+            document.getElementById('bundleTasselChoice').value = colorName;
+        }
+        function updateBundleConfigTotal() {
+            let total = 0;
+            document.querySelectorAll('#bcmAddons input[type="checkbox"]:checked').forEach(cb => { total += parseInt(cb.getAttribute('data-price')); });
+            document.getElementById('bcmTotal').innerText = 'PKR ' + total.toLocaleString();
+            const btn = document.getElementById('bundleAddCartBtn');
+            if (total === 0) { btn.disabled = true; } else { btn.disabled = false; }
+        }
+        function addConfiguredBundleToCart() {
+            let total = 0;
+            let addOns = [];
+            document.querySelectorAll('#bcmAddons input[type="checkbox"]:checked').forEach(cb => {
+                let name = cb.getAttribute('data-name');
+                let price = parseInt(cb.getAttribute('data-price'));
+                total += price;
+                if(name === 'Engraving') {
+                    let text = document.getElementById('bundleEngravingText').value;
+                    let font = document.getElementById('bundleFontStyle').value;
+                    let fontName = font.replace('font-', '').replace(/^\w/, c => c.toUpperCase());
+                    if(text) name += ` ("${text}" in ${fontName})`;
+                }
+                if(name === 'Custom Tassel') {
+                    let color = document.getElementById('bundleTasselChoice').value;
+                    name += ` (${color})`;
+                }
+                addOns.push(name);
+            });
+            if(addOns.length === 0) return alert("Please select at least one add-on.");
+            addToCart('Custom Bundle Add-ons', total, "Details: " + addOns.join(", "));
+            closeBundleConfig();
+        }
+
+        let cart = [];
+        function addToCart(title, price, type) {
+            cart.push({ title, price, desc: type, image: 'featured-1.JPEG' });
+            updateCartUI();
+            toggleCart();
+        }
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            sidebar.classList.toggle('active');
+            overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+        }
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            document.getElementById('cartCount').innerText = cart.length;
+            let total = 0;
+            container.innerHTML = '';
+            if(cart.length === 0) container.innerHTML = '<p style="text-align:center; color:#999;">Cart is empty.</p>';
+            cart.forEach((item, index) => {
+                total += item.price;
+                container.innerHTML += `
+                    <div style="display:flex; gap:10px; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <img src="${item.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;" onerror="this.src='https://via.placeholder.com/50'">
+                        <div>
+                            <div style="font-weight:bold; font-size:0.9rem;">${item.title}</div>
+                            <div style="font-size:0.8rem; color:#666;">${item.desc}</div>
+                            <div style="color:var(--text-teal);">PKR ${item.price.toLocaleString()}</div>
+                        </div>
+                        <div style="margin-left:auto; color:red; cursor:pointer;" onclick="cart.splice(${index}, 1); updateCartUI();">&times;</div>
+                    </div>
+                `;
+            });
+            document.getElementById('cartTotal').innerText = 'PKR ' + total.toLocaleString();
+        }
+
+        // --- DESIGN LAB LOGIC (UPDATED) ---
+        function updatePreview() {
+            const textInput = document.getElementById('customText');
+            const textInput2 = document.getElementById('customText2');
+            let text = textInput.value;
+            let text2 = textInput2.value;
+            
+            const border = document.getElementById('borderStyle').value;
+            const font1 = document.getElementById('fontStyle1').value;
+            const font2 = document.getElementById('fontStyle2').value;
+            const color1 = document.getElementById('textColor1').value;
+            const color2 = document.getElementById('textColor2').value;
+
+            const previewBox = document.getElementById('visualPreview');
+            const previewText = document.getElementById('previewTextDisplay');
+            const previewText2 = document.getElementById('previewTextDisplay2');
+            
+            // Text 1
+            previewText.innerText = text ? text : "Text 1";
+            previewText.style.color = color1;
+            
+            // Text 2
+            if (text2) {
+                previewText2.style.display = "block";
+                previewText2.innerText = text2;
+                previewText2.style.color = color2;
+                previewText.style.fontSize = "1.2rem";
+                previewText2.style.fontSize = "1.2rem";
+            } else {
+                previewText2.style.display = "none";
+                previewText.style.fontSize = "1.5rem";
+            }
+
+            // Border
+            previewBox.className = 'bookmark-preview';
+            if(border !== 'none') previewBox.classList.add(border);
+
+            // Fonts
+            const allFonts = ['font-nastaliq', 'font-playfair', 'font-dancing', 'font-cinzel', 'font-greatvibes', 'font-montserrat', 'font-amiri'];
+            previewText.classList.remove(...allFonts);
+            previewText2.classList.remove(...allFonts);
+            previewText.classList.add(font1);
+            previewText2.classList.add(font2);
+        }
+
+        function selectColor(element, colorName, hexCode) {
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('selectedColor').value = colorName;
+            
+            let style = document.getElementById('dynamic-tassel-style');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = 'dynamic-tassel-style';
+                document.head.appendChild(style);
+            }
+            style.innerHTML = `.tassel-visual { background: ${hexCode}; } .tassel-visual::after { background: ${hexCode}; }`;
+        }
+
+        function handleImageUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgLayer = document.getElementById('uploadedImageLayer');
+                    imgLayer.src = e.target.result;
+                    imgLayer.style.display = 'block';
+                    document.getElementById('previewTextContainer').style.display = 'none';
+                    document.getElementById('removeImageBtn').style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeUploadedImage() {
+            document.getElementById('customFile').value = "";
+            document.getElementById('uploadedImageLayer').style.display = 'none';
+            document.getElementById('previewTextContainer').style.display = 'flex';
+            document.getElementById('removeImageBtn').style.display = 'none';
+        }
+
+        function updateTotal() {
+            const isGift = document.getElementById('giftBox').checked;
+            document.getElementById('customPrice').innerText = 'PKR ' + (isGift ? 1249 : 999).toLocaleString();
+        }
+
+        function addLabItemToCart() {
+            const text = document.getElementById('customText').value;
+            const text2 = document.getElementById('customText2').value;
+            const file = document.getElementById('customFile').files.length;
+            
+            if(!text && !text2 && file === 0) return alert("Please add text or upload a design.");
+            
+            let desc = text ? `Line 1: ${text}` : '';
+            if(text2) desc += ` | Line 2: ${text2}`;
+            if(file > 0) desc += " | File Uploaded";
+
+            cart.push({
+                title: 'Custom Design',
+                price: document.getElementById('giftBox').checked ? 1249 : 999,
+                desc: desc,
+                image: 'IMG_1665.JPG'
+            });
+            updateCartUI();
+            toggleCart();
+        }
+
+        function openCheckout() {
+            if(cart.length === 0) return alert("Cart is empty");
+            toggleCart();
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        function handleContact(e) {
+            e.preventDefault();
+            const form = document.getElementById('contactForm');
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+            const formData = new FormData(form);
+            fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData })
+            .then(async (response) => {
+                if (response.status === 200) { alert("Message Sent!"); form.reset(); } 
+                else { alert("Error sending message."); }
+            }).finally(() => { btn.innerText = originalText; btn.disabled = false; });
+        }
+
+        function handlePayment(e) {
+            e.preventDefault(); 
+            const phone = document.getElementById('phoneInput').value;
+            if (!/^\d+$/.test(phone)) { return alert("Please enter a valid phone number (digits only)."); }
+            const form = document.getElementById('checkoutForm');
+            const btn = form.querySelector('button[type="submit"]');
+            let orderSummary = "--- ORDER ITEMS ---\n";
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                orderSummary += `${index + 1}. ${item.title} (${item.desc}) - PKR ${item.price}\n`;
+            });
+            orderSummary += `\nTOTAL AMOUNT: PKR ${total.toLocaleString()}`;
+            document.getElementById('orderMessage').value = orderSummary;
+            const originalText = btn.innerText;
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+            const formData = new FormData(form);
+            fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData })
+            .then(async (response) => {
+                if (response.status === 200) { alert("Order Placed Successfully!"); cart = []; updateCartUI(); document.getElementById('checkoutModal').style.display = 'none'; form.reset(); } 
+                else { alert("Something went wrong."); }
+            }).finally(() => { btn.innerText = originalText; btn.disabled = false; });
+        }
+    </script>
+</body>
+</html>
